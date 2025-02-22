@@ -2,16 +2,20 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
+import messageRoutes from "./routes/message.routes.js";
 import connectToMongoDB from "./controllers/db/connectToMongoDB.js";
+import cookieParser from 'cookie-parser';
 
 const app = express();
 dotenv.config();
 
 //add another middleware to parse incoming requests, particularly body requests
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
 
-//create authentication routes here. 
-app.use("/api/auth",authRoutes)
+//create authentication and message routes here. 
+app.use("/api/auth",authRoutes);
+app.use("/api/messages", messageRoutes);
 
 
 

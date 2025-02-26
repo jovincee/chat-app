@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css';
 import Login from './pages/login/Login.jsx';
-import SignUp from './pages/signup/Signup.jsx';
+import SignUp from './pages/signup/SignUp.jsx';
 import Home from './pages/home/Home.jsx';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -11,7 +11,7 @@ import { useAuthContext } from './context/AuthContext.jsx';
 
 function App() {
   //define authorized user here: user that has logged in
-  const {authUser} = useAuthContext();
+  const { authUser } = useAuthContext();
 
 
   return (

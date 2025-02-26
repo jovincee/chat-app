@@ -37,13 +37,13 @@ const useSignup = () => {
             console.log(data)
 
             //localstorage
-            localStorage.setItem("user-info",JSON.stringify(data))
+            localStorage.setItem("user-info",JSON.stringify(data));
             //create context so that user info gets passed across different links/components
             //update context
             setAuthUser(data);
 
         } catch(error) {
-            toast.error(error.message)
+            toast.error(error.message);
         } finally {
             console.log("Success!");
             setLoading(false);

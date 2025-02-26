@@ -4,14 +4,26 @@ import MessageInput from './MessageInput.jsx';
 import { TiMessages } from "react-icons/ti";
 
 const MessageContainer = () => {
+    //if true, show noSelectedChat component, if false, show 
   const noSelectedChat = true;
   return (
     <div className='md:min-w-[450px] flex flex-col'>
         {noSelectedChat ? (
             <NoSelectedChat />
         ) : (
+            <MessageBox />            
+        )}
+        
+        
+      
+    </div>
+  )
+}
 
-            <>
+export default MessageContainer;
+const MessageBox = () => {
+    return (
+        <>
             {/* Header */}
             <div className='bg-slate-300 px-4 py-2 mb-2'>
                 <span className='label-text'>To:</span>{" "} 
@@ -24,16 +36,9 @@ const MessageContainer = () => {
         
             
             </>
-        )}
-        
-        
-      
-    </div>
-  )
+    )
+
 }
-
-export default MessageContainer;
-
 const NoSelectedChat = () => {
     return (
         <div className='flex items-center justify-center w-full h-full'>

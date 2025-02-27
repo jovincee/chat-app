@@ -1,13 +1,26 @@
 import React from 'react'
+import { useAuthContext } from '../../context/AuthContext';
+import useConversation from '../../zustand/useConversation';
+import { extractTime } from '../../utils/extractTime';
 
-const Message = () => {
+//pass on message as props
+const Message = ({message}) => {
+  //define authorized user and selected conversation here to grab receiver id
+  const {authUser} = useAuthContext();
+  const {selectedConversation} = useConversation();
+  
+  const fromMe = message.senderId === authUser._id; //true if sender id is equal to authorized user's id
+  const chatClassName = fromMe ? 'chat-end' : 'chat-start';  
+  const profilePic = fromMe ? authUser.profilePic: selectedConversation?.profilePic;  //used for determining which avatar is used
+  const bubbleBgColor = fromMe ? 'bg-blue-500' : "";
+  const formattedTime = extractTime(message.createdAt);
   return (
-    <div className='chat chat-end'>
+    <div className={`chat ${chatClassName}`}>
         <div className='chat-image avatar'>
             <div className='w-10 rounded-full'>
                 <img
                     alt='Tailwind CSS chat bubble component'
-                    src={"https://cdn0.iconfinder.com/data/icons/cryptocurrency-137/128/1_profile_user_avatar_account_person-132-512.png"}
+                    src={profilePic}
                 
                 />
 
@@ -15,8 +28,8 @@ const Message = () => {
             </div>
 
         </div>
-        <div className={`chat-bubble text-white bg-blue-500`}>Hello</div>
-        <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>12:42</div>
+        <div className={`chat-bubble text-white ${bubbleBgColor}`}>{message.message}</div>
+        <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
     </div>
   );
 };

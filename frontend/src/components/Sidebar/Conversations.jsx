@@ -7,9 +7,9 @@ const Conversations = () =>{
     const { loading, conversations } = useGetConversations();
     console.log("CONVERSATIONS: ", conversations);
     //call hook here:
-    useGetConversations();
     return (
         <div className='py-2 flex flex-col overflow-auto'>
+            {/*Get conversations list and render components on each element*/}
             {conversations.map((conversation,idx) => (
                 <ConvBar 
                     key={conversation._id}

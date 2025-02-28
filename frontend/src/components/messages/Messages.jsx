@@ -2,10 +2,12 @@ import { useEffect, useRef } from 'react'
 import Message from './Message.jsx'
 import useGetMessages from '../../hooks/useGetMessages.js'
 import MessageSkeleton from '../skeletons/MessageSkeleton.jsx';
+import useListenMessages from '../../hooks/useListenMessages';
 
 
 const Messages = () => {
   const { messages, loading } = useGetMessages();
+  useListenMessages();
   const lastMessageRef = useRef();
 
   //use useEffect hook to automatically scroll to the very bottom of the message box

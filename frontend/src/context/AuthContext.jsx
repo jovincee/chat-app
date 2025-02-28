@@ -8,7 +8,7 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }) => {
     //if local storage is empty, then set user-info to null
-    const [authUser,setAuthUser] = useState(localStorage.getItem("user-info") || null)
+    const [authUser,setAuthUser] = useState(JSON.parse(localStorage.getItem("user-info")) || null)
 
     return <AuthContext.Provider value={{authUser,setAuthUser}}>
         

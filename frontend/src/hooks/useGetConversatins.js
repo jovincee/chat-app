@@ -27,6 +27,15 @@ const useGetConversations = () => {
 
         }
 
+        const getChats = async () => {
+            setLoading(true);
+            
+
+
+
+
+
+        }
         getConversations();
 
     },[]);

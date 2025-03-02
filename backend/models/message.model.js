@@ -16,6 +16,11 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		//create a boolean field if user has read the chat or not; default false since all sent messages are initially marked as unread.
+		hasRead: {
+			type: Boolean,
+			default: false
+		}
 		// createdAt, updatedAt
 	},
 	{ timestamps: true }

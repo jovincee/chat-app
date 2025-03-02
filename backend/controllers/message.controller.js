@@ -7,6 +7,7 @@ export const sendMessage = async (req, res) => {
         //get message and id as receiver id
         const { message } = req.body;
         const { id:receiverId } = req.params;
+        const hasRead = false;
         //need a middleware to fetch the senderId
         const senderId = req.user._id;      
 
@@ -26,10 +27,12 @@ export const sendMessage = async (req, res) => {
             senderId,
             receiverId,
             message,
+            hasRead,
         });
-
+        //if message is newly sent, append unreadCount to 1
         if(newMessage){
             conversation.messages.push(newMessage._id);
+            conversation.unreadCount++;
         }
 
         //save message to db
@@ -83,3 +86,45 @@ export const getMessages = async (req, res) => {
     }
 
 };
+
+//pass on other's sender id as a parameter to the endpoint
+// export const getNumberOfUnreadMsgs = async (req, res) => {
+//     try 
+//         {
+            
+
+//         } catch (error){
+//             console.log("Error in getMessages controller: ", error.message);
+//             res.status(500).json({ error: "Internal server error" });
+
+//         }
+
+// }
+
+export const getConvoInfo = async (req, res) => {
+    try
+        {
+            const loggedInUserId = req.user._id;
+            //filter all users that have unread messages/opened chat with user; should
+            //return a JSON of conversations.
+            const { id: userToChatId } = req.params;
+
+            //begin finding the message on the sender id and receiverid
+            const conversation = await Conversation.find({'participants': { $in: loggedInUserId}});
+
+            // //if conversation doesn't exist, return empty array of messages.
+            if (!conversation) return res.status(200).json([]);
+
+           
+            //output as JSON status and show its message contents 
+            res.status(200).json(conversation);
+
+            } catch (error) {
+                console.log("Error in getMessages controller: ", error.message);
+                res.status(500).json({ error: "Internal server error" });
+            }
+                
+
+};
+
+

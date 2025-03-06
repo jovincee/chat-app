@@ -20,6 +20,8 @@ const useGetMessages = () => {
             setLoading(false)
         }
     }
+
+    
     //get another hook inside useEffect to update the unread count
     // const updateUnreadCount = () => {
     //   console.log(`Unread count: ${unreadCount}`);

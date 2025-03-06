@@ -7,10 +7,12 @@ import useConversation from '../../zustand/useConversation.js';
 import { useUnreadCountContext } from "../../context/UnreadCountContext.jsx";
 import Conversation from '../../../../backend/models/conversation.model.js';
 import { useAuthContext } from '../../context/AuthContext.jsx';
+import useUpdateUnreadCountMsgs from '../../hooks/useUpdateUnreadCountMsgs.js';
 
 
 const Messages = () => {
   const { selectedConversation } = useConversation();
+  useUpdateUnreadCountMsgs();
   const { messages, loading } = useGetMessages();
   const {unreadCount, setUnreadCount} = useUnreadCountContext();
   useListenMessages();
@@ -19,7 +21,7 @@ const Messages = () => {
   //use useEffect hook to automatically scroll to the very bottom of the message box
   useEffect(() => {
     setTimeout(() => {
-      console.log("Unread count: ", unreadCount);
+      
       
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);

@@ -22,7 +22,15 @@ const conversationSchema = new mongoose.Schema({
     unreadCount: {
         type: Number,
         default: 0
+    },
+
+    recentSender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
     }
+
+    
     
 }, {timestamps: true});
 

@@ -32,7 +32,9 @@ const MessageContainer = () => {
 export default MessageContainer;
 const MessageBox = (fullName) => {
     const {selectedConversation, setSelectedConversation} = useConversation();
+    
     return (
+            
         <>
             {/* Header */}
             <div className='bg-slate-300 px-4 py-2 mb-2'>

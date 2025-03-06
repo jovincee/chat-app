@@ -3,20 +3,29 @@ import Message from './Message.jsx'
 import useGetMessages from '../../hooks/useGetMessages.js'
 import MessageSkeleton from '../skeletons/MessageSkeleton.jsx';
 import useListenMessages from '../../hooks/useListenMessages';
+import useConversation from '../../zustand/useConversation.js';
+import { useUnreadCountContext } from "../../context/UnreadCountContext.jsx";
+import Conversation from '../../../../backend/models/conversation.model.js';
+import { useAuthContext } from '../../context/AuthContext.jsx';
 
 
 const Messages = () => {
+  const { selectedConversation } = useConversation();
   const { messages, loading } = useGetMessages();
+  const {unreadCount, setUnreadCount} = useUnreadCountContext();
   useListenMessages();
   const lastMessageRef = useRef();
 
   //use useEffect hook to automatically scroll to the very bottom of the message box
   useEffect(() => {
     setTimeout(() => {
+      console.log("Unread count: ", unreadCount);
+      
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   },[messages])
 
+  
 
   return (
     <div className='px-4 flex-1 overflow-auto'>

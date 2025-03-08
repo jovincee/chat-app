@@ -8,18 +8,24 @@ import { useUnreadCountContext } from "../../context/UnreadCountContext.jsx";
 import Conversation from '../../../../backend/models/conversation.model.js';
 import { useAuthContext } from '../../context/AuthContext.jsx';
 import useUpdateUnreadCountMsgs from '../../hooks/useUpdateUnreadCountMsgs.js';
-
+import useGetConversations from "../../hooks/useGetConversatins.js";
+import { useAllChatsContext } from "../../context/AllChatsContext.jsx";
 
 const Messages = () => {
   const { selectedConversation } = useConversation();
   useUpdateUnreadCountMsgs();
+  const { chats, setChats } = useAllChatsContext();
   const { messages, loading } = useGetMessages();
   const {unreadCount, setUnreadCount} = useUnreadCountContext();
-  useListenMessages();
+  //apply listener events here:
+  useListenMessages();    //listener event for new message
   const lastMessageRef = useRef();
 
   //use useEffect hook to automatically scroll to the very bottom of the message box
   useEffect(() => {
+    console.log(selectedConversation, chats)
+    
+    
     setTimeout(() => {
       
       

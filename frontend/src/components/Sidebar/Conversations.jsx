@@ -2,6 +2,8 @@ import ConvBar from "./ConvBar.jsx";
 import useGetConversations from "../../hooks/useGetConversatins.js";
 import { getRandomEmoji } from "../../utils/emojis.js";
 import { useAuthContext } from "../../context/AuthContext.jsx";
+import useConversation from '../../zustand/useConversation.js';
+import { useAllChatsContext } from "../../context/AllChatsContext.jsx";
 
 
 function filterUsers(chats, userId){
@@ -21,12 +23,14 @@ function filterUsers(chats, userId){
 const Conversations = () =>{
     const { authUser } = useAuthContext();
     const { loading, conversations, chats } = useGetConversations();
+    const { setChats } = useAllChatsContext();
+   
 
     // console.log("CONVERSATIONS: ", conversations);
     // console.log("chats", chats);
 
     // let arrUsers = filterUsers(chats,authUser._id);
-
+    setChats(chats);
     
     
     //call hook here:

@@ -20,6 +20,7 @@ const getUnreadMessages = (chats,authId,otherId) => {
 const ConvBar = ({conversation,lastIdx,emoji,chats,authId}) => {
     const {selectedConversation, setSelectedConversation} = useConversation();
     
+    const [isCounted, setIsCounted] = useState(false)
     
     const {unreadCount, setUnreadCount} = useUnreadCountContext();
     const isSelected = selectedConversation?._id === conversation._id;
@@ -27,6 +28,7 @@ const ConvBar = ({conversation,lastIdx,emoji,chats,authId}) => {
     const isOnline = onlineUsers.includes(conversation._id);
     const count = getUnreadMessages(chats,authId,conversation._id);
     const hasCount = count > 0 ? true : false
+    
    
     
     
@@ -43,8 +45,9 @@ const ConvBar = ({conversation,lastIdx,emoji,chats,authId}) => {
         ${isSelected ? "bg-sky-500" : ""}
         `}
         onClick={() => {
-            setSelectedConversation(conversation)
+            setSelectedConversation(conversation);
             setUnreadCount(count);
+            
         }}
         >
         <div className={`avatar ${isOnline ? "online" : ""}`}>
@@ -57,7 +60,7 @@ const ConvBar = ({conversation,lastIdx,emoji,chats,authId}) => {
     <div className='flex flex-col flex-1'>
         <div className='flex gap-3 justify-between'>
             <p className='font-bold text-gray-200'>{conversation.fullName}</p>
-            <span className='text-xl'>{hasCount ? count : ""}</span>
+            {hasCount ? (<div className="badge badge-sm badge-secondary">{count}</div>) : ""}
 
         </div>
 

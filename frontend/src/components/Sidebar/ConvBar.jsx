@@ -21,31 +21,27 @@ const ConvBar = ({conversation,lastIdx,emoji,chats,authId}) => {
     const {selectedConversation, setSelectedConversation} = useConversation();
     
     const [isCounted, setIsCounted] = useState(false)
-    
+    const [count, setCount] = useState(0);
     const {unreadCount, setUnreadCount} = useUnreadCountContext();
     const isSelected = selectedConversation?._id === conversation._id;
     const {onlineUsers} = useSocketContext();
     const isOnline = onlineUsers.includes(conversation._id);
-    const count = getUnreadMessages(chats,authId,conversation._id);
+    const c = getUnreadMessages(chats,authId,conversation._id);
     const hasCount = count > 0 ? true : false
-    
-   
-    
-    
-
-    
-    
-
-    // const { unreadCount, hasUnreadMsgs } = useCountUnread(arrUsers,conversation._id);
-    // if (unreadCount > 0){ setHasUnreadMsgs(true) }
-    
+    //begin setting state variable count and iscounted while count changes
+    useEffect(() => {       
+        setCount(c);       
+        if (count > 0) setIsCounted(true);
+    },[count])
 
     return <>
     <div className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
         ${isSelected ? "bg-sky-500" : ""}
         `}
+        /**Set an on event click handler; set iscounted to false so that the notification badge disappears */
         onClick={() => {
             setSelectedConversation(conversation);
+            setIsCounted(false);
             setUnreadCount(count);
             
         }}
@@ -60,7 +56,7 @@ const ConvBar = ({conversation,lastIdx,emoji,chats,authId}) => {
     <div className='flex flex-col flex-1'>
         <div className='flex gap-3 justify-between'>
             <p className='font-bold text-gray-200'>{conversation.fullName}</p>
-            {hasCount ? (<div className="badge badge-sm badge-secondary">{count}</div>) : ""}
+            {isCounted ? (<div className="badge badge-sm badge-secondary">{count}</div>) : ""}
 
         </div>
 

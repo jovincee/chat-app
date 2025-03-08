@@ -4,6 +4,7 @@ import { getRandomEmoji } from "../../utils/emojis.js";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 import useConversation from '../../zustand/useConversation.js';
 import { useAllChatsContext } from "../../context/AllChatsContext.jsx";
+import { useEffect } from 'react'
 
 
 function filterUsers(chats, userId){
@@ -30,8 +31,10 @@ const Conversations = () =>{
     // console.log("chats", chats);
 
     // let arrUsers = filterUsers(chats,authUser._id);
-    setChats(chats);
     
+    useEffect(() => {
+        setChats(chats);
+    }, [chats])
     
     //call hook here:
     return (

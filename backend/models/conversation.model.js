@@ -17,6 +17,21 @@ const conversationSchema = new mongoose.Schema({
             default: [],
         },
     ],
+
+    //add unread message count here to keep track of unread messages; updates when user opens the chat.
+    unreadCount: {
+        type: Number,
+        default: 0
+    },
+
+    recentSender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+    }
+
+    
+    
 }, {timestamps: true});
 
 const Conversation = mongoose.model("Conversation", conversationSchema);

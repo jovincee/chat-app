@@ -1,0 +1,39 @@
+import React from 'react'
+import { useAuthContext } from '../../context/AuthContext';
+import useConversation from '../../zustand/useConversation';
+import { extractTime } from '../../utils/extractTime';
+
+//pass on message as props
+const Message = ({message}) => {
+  //define authorized user and selected conversation here to grab receiver id
+  const {authUser} = useAuthContext();
+  const {selectedConversation} = useConversation();
+  
+  const fromMe = message.senderId === authUser._id; //true if sender id is equal to authorized user's id
+  const chatClassName = fromMe ? 'chat-end' : 'chat-start';  
+  const profilePic = fromMe ? authUser.profilePic: selectedConversation?.profilePic;  //used for determining which avatar is used
+  const bubbleBgColor = fromMe ? 'bg-blue-500' : "";
+  const formattedTime = extractTime(message.createdAt);
+  const shakeClass = message.shouldShake ? "shake" : "";
+
+  return (
+    <div className={`chat ${chatClassName}`}>
+        <div className='chat-image avatar'>
+            <div className='w-10 rounded-full'>
+                <img
+                    alt='Tailwind CSS chat bubble component'
+                    src={profilePic}
+                
+                />
+
+
+            </div>
+
+        </div>
+        <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass}`}>{message.message}</div>
+        <div className='chat-footer text-gray-100 opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
+    </div>
+  );
+};
+
+export default Message;
